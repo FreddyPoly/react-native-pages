@@ -41,6 +41,7 @@ export default class Pages extends PureComponent {
       'bottom',
       'left',
     ]),
+    indicatorContainerStyle: ViewPropTypes.style,
 
     startPage: PropTypes.number,
     progress: PropTypes.instanceOf(Animated.Value),
@@ -213,7 +214,7 @@ export default class Pages extends PureComponent {
   }
 
   renderPager(pager) {
-    let { renderPager, horizontal, rtl } = this.props;
+    let { renderPager, horizontal, rtl, indicatorContainerStyle } = this.props;
 
     if ('function' === typeof renderPager) {
       return renderPager({ horizontal, rtl, ...pager });
@@ -231,7 +232,7 @@ export default class Pages extends PureComponent {
 
     return (
       <View style={[styles[indicatorPosition], indicatorStyle]}>
-        <Indicator {...pager} />
+        <Indicator {...pager} indicatorContainerStyle={indicatorContainerStyle} />
       </View>
     );
   }
