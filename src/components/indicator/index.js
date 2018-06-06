@@ -10,7 +10,8 @@ export default class Indicator extends PureComponent {
 
     pages: PropTypes.number.isRequired,
     progress: PropTypes.instanceOf(Animated.Value).isRequired,
-    indicatorColor: PropTypes.string.isRequired,
+    activeIndicatorColor: PropTypes.string.isRequired,
+    inactiveIndicatorColor: PropTypes.string,
     indicatorOpacity: PropTypes.number.isRequired,
     indicatorPosition: PropTypes.oneOf([
       'top',
@@ -24,7 +25,8 @@ export default class Indicator extends PureComponent {
     let {
       pages,
       progress,
-      indicatorColor: backgroundColor,
+      activeIndicatorColor,
+      inactiveIndicatorColor,
       indicatorOpacity,
       indicatorPosition,
       style,
@@ -33,28 +35,50 @@ export default class Indicator extends PureComponent {
     } = this.props;
 
     let dots = Array.from(new Array(pages), (page, index) => {
-      let opacity = progress
-        .interpolate({
-          inputRange: [
-            -Infinity,
-            index - 1,
-            index,
-            index + 1,
-            Infinity,
-          ],
-          outputRange: [
-            indicatorOpacity,
-            indicatorOpacity,
-            1.0,
-            indicatorOpacity,
-            indicatorOpacity,
-          ],
-        });
+      let opacity = 1.0;
+      let backgroundColor = activeIndicatorColor;
+      if (!inactiveIndicatorColor) {
+        opacity = progress
+          .interpolate({
+            inputRange: [
+              -Infinity,
+              index - 1,
+              index,
+              index + 1,
+              Infinity,
+            ],
+            outputRange: [
+              indicatorOpacity,
+              indicatorOpacity,
+              1.0,
+              indicatorOpacity,
+              indicatorOpacity,
+            ],
+          });
+      } else {
+        backgroundColor = progress
+          .interpolate({
+            inputRange: [
+              -Infinity,
+              index - 1,
+              index,
+              index + 1,
+              Infinity,
+            ],
+            outputRange: [
+              inactiveIndicatorColor,
+              inactiveIndicatorColor,
+              activeIndicatorColor,
+              inactiveIndicatorColor,
+              inactiveIndicatorColor,
+            ],
+          });
+      }
 
       let style = { opacity, backgroundColor };
 
       return (
-        <Animated.View style={[styles.dot, style, indicatorContainerStyle]} key={index} />
+        <Animated.View style={[styles.dot, indicatorContainerStyle, style]} key={index} />
       );
     });
 

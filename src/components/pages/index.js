@@ -19,7 +19,7 @@ export default class Pages extends PureComponent {
     scrollEventThrottle: 30,
     scrollsToTop: false,
 
-    indicatorColor: 'rgb(255, 255, 255)',
+    activeIndicatorColor: 'rgb(255, 255, 255)',
     indicatorOpacity: 0.30,
 
     startPage: 0,
@@ -32,7 +32,8 @@ export default class Pages extends PureComponent {
     style: ViewPropTypes.style,
     containerStyle: ViewPropTypes.style,
 
-    indicatorColor: PropTypes.string,
+    activeIndicatorColor: PropTypes.string,
+    inactiveIndicatorColor: PropTypes.string,
     indicatorOpacity: PropTypes.number,
     indicatorPosition: PropTypes.oneOf([
       'none',
@@ -276,7 +277,8 @@ export default class Pages extends PureComponent {
       style,
       containerStyle,
       children,
-      indicatorColor,
+      activeIndicatorColor,
+      inactiveIndicatorColor,
       indicatorOpacity,
       indicatorPosition = horizontal? 'bottom' : 'right',
       ...props
@@ -288,7 +290,8 @@ export default class Pages extends PureComponent {
       this.renderPager({
         pages,
         progress,
-        indicatorColor,
+        activeIndicatorColor,
+        inactiveIndicatorColor,
         indicatorOpacity,
         indicatorPosition,
       });
