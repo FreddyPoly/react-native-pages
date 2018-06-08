@@ -56,6 +56,7 @@ export default class Pages extends PureComponent {
     ]),
 
     onLayout: PropTypes.func,
+    scrolling: PropTypes.func,
     onScrollEnd: PropTypes.func,
     renderPager: PropTypes.func,
   };
@@ -264,6 +265,7 @@ export default class Pages extends PureComponent {
         onScrollEndDrag={this.onScrollEndDrag}
         contentOffset={contentOffset}
         ref={this.updateRef}
+        onScroll={this.props.scrolling}
       >
         {Children.map(children, this.renderPage)}
       </ScrollView>
